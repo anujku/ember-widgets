@@ -49,10 +49,14 @@ test 'Test preserving the focus when clicking on non-focusable element', ->
   validateFocus = (element, messageFocus) ->
     ok isFocused(element, modalComponent), messageFocus
 
-  validateFocus buttonConfirm, 'Button confirm should be focused'
+  keyEvent(buttonConfirm, 'keydown',9)
+  .then ->
+    buttonCancel.focus()
+  .then ->
+    validateFocus buttonCancel, 'Button Cancel should be focused'
 
   # click on a the body of the modal which is a non-focusable element,
   # the focus should stay on the cancel button
   click(modalBody)
   .then ->
-    validateFocus buttonConfirm, 'The focus should stay on the Confirm button'
+    validateFocus buttonCancel, 'The focus should stay on the Cancel button'
