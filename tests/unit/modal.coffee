@@ -1,20 +1,19 @@
 modal = null
 dispatcher = null
 
-module "[Unit] Modal component",
-  setup: ->
-    Ember.run ->
-      dispatcher = Ember.EventDispatcher.create()
-      dispatcher.setup()
-      modal = Ember.Widgets.ModalComponent.popup()
-
-  teardown: ->
-    Ember.run ->
-      dispatcher.destroy()
-      modal.destroy()
+moduleForComponent 'modal', "[Unit] Modal component",
+  needs: [
+    'template:modal'
+    'template:modal_header'
+    'template:modal-footer'
+  ]
 
 test 'Test tab loop only inside modal', ->
   expect 3
+
+  modal = @subject()
+  @append()
+
   modalComponent = modal.$()
   modal.set('enforceModality', yes)
   buttonConfirm = find '.btn-confirm', modalComponent
@@ -38,6 +37,10 @@ test 'Test tab loop only inside modal', ->
 
 test 'Test preserving the focus when clicking on non-focusable element', ->
   expect 2
+
+  modal = @subject()
+  @append()
+
   modalComponent = modal.$()
   buttonConfirm = find '.btn-confirm', modalComponent
   buttonCancel = find '.btn-cancel', modalComponent
