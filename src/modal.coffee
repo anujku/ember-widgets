@@ -125,6 +125,16 @@ Ember.Component.extend Ember.Widgets.StyleBindingsMixin, Ember.Widgets.TabbableM
     # remove backdrop
     @_backdrop.remove() if @_backdrop
 
+  click: (event) ->
+    @_super(event)
+    # our modal component is a container. When we click on
+    # the modal (currentTarget), inside the dialog,
+    # some child element (target) will receive the event.
+    # Instead, if we click outside the dialog, the event will stay
+    # on the modal (currentTarget) because there is no child element there.
+    if event.target is event.currentTarget
+      @send 'sendCancel' unless @get('enforceModality')
+
   hide: ->
     @set 'isShowing', no
     # bootstrap modal removes this class from the body when the modal closes

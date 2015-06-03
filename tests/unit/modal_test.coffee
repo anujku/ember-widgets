@@ -36,7 +36,7 @@ test 'Test tab loop only inside modal', ->
     validateFocus buttonConfirm, 'Button Confirm should be focused'
 
 test 'Test preserving the focus when clicking on non-focusable element', ->
-  expect 2
+  expect 1
 
   modal = @subject()
   @append()
@@ -52,9 +52,6 @@ test 'Test preserving the focus when clicking on non-focusable element', ->
   keyEvent(buttonConfirm, 'keydown',9)
   .then ->
     buttonCancel.focus()
-  .then ->
-    validateFocus buttonCancel, 'Button Cancel should be focused'
-
   # click on a the body of the modal which is a non-focusable element,
   # the focus should stay on the cancel button
   click(modalBody)
