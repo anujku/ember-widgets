@@ -116,6 +116,7 @@ Ember.Widgets.TabbableModal = Ember.Mixin.create Ember.Widgets.KeyboardHelper,
     return no
 
   click: (event) ->
+    @_super()
     if event.target is event.currentTarget
       @send 'sendCancel' unless @get('enforceModality')
 
@@ -134,6 +135,7 @@ Ember.Widgets.TabbableModal = Ember.Mixin.create Ember.Widgets.KeyboardHelper,
   # capture the TAB key and make a cycle tab loop among the tabbable elements
   # inside the modal. Remove the close button from the loop
   keyDown: (event) ->
+    @_super()
     return if event.isDefaultPrevented()
 
     if event.keyCode == @KEY_CODES.ESCAPE and @get 'escToCancel'
